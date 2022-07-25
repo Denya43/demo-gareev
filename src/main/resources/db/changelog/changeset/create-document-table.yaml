@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-document
+      author: Denis
+      changes:
+        - createTable:
+            tableName: test_entity
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: document_name
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: document_date
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: dictionary_value_id
+                  type: bigint
+                  constraints:
+                    nullable: false
