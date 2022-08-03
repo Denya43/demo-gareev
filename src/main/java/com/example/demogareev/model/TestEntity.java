@@ -1,15 +1,17 @@
 package com.example.demogareev.model;
 
+import com.example.demogareev.dto.AddTestEntityDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Data
-//@Table(name = "test_entity")
-//@AllArgsConstructor
-//@NoArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class TestEntity {
 
     @Id
@@ -25,4 +27,10 @@ public class TestEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long dictionaryValueId;
+
+    public TestEntity(AddTestEntityDto addTestEntityDto) {
+        this.documentName = addTestEntityDto.getDocumentName();
+        this.documentDate = addTestEntityDto.getDocumentDate();
+        this.dictionaryValueId = addTestEntityDto.getDictionaryValueId();
+    }
 }
