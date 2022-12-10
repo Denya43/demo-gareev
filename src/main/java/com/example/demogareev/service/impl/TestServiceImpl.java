@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 
 import static com.example.demogareev.resources.LoggerResources.*;
-import static jdk.nashorn.internal.objects.NativeMath.log;
+
 
 @Service
 @Slf4j
@@ -25,18 +25,19 @@ public class TestServiceImpl implements TestService {
 
     private final MyRepository myRepository;
 
+
     @Override
     public Optional<TestEntity> getTestEntityById(Long id) {
 
-        log(Level.INFO, ENTRY);
+        log.trace("ENTRY");
 
         Optional<TestEntity> result = myRepository.getTestEntityById(id);
         if (!result.isPresent()) {
-            log(Level.INFO, THROW);
+            log.trace("THROW");
             throw new ApiTestEntityNotFoundException("testEntity doesn't exist");
         }
 
-        log(Level.INFO, EXIT);
+        log.trace("EXIT");
 
         return result;
     }
@@ -44,18 +45,18 @@ public class TestServiceImpl implements TestService {
     @Override
     public void addTestEntity(AddTestEntityDto dto) {
 
-        log(Level.INFO, ENTRY);
+        log.trace("ENTRY");
 
         TestEntity testEntity = new TestEntity(dto);
         myRepository.save(testEntity);
 
-        log(Level.INFO, EXIT);
+        log.trace("EXIT");
     }
 
     @Override
     public void changeTestEntityName(ChangeTestEntityNameDto dto) {
 
-        log(Level.INFO, ENTRY);
+        log.trace("ENTRY");
 
         Optional<TestEntity> optional = myRepository.getTestEntityById(dto.getId());
         if (optional.isPresent()) {
@@ -63,28 +64,28 @@ public class TestServiceImpl implements TestService {
             testEntity.setDocumentName(dto.getDocumentName());
             myRepository.save(testEntity);
         } else {
-            log(Level.INFO, THROW);
+            log.trace("THROW");
             throw new ApiTestEntityNotFoundException("testEntity with this id doesn't exist");
         }
 
-        log(Level.INFO, EXIT);
+        log.trace("EXIT");
     }
 
     @Override
     public void deleteTestEntity(DeleteTestEntityDto dto) {
 
-        log(Level.INFO, ENTRY);
+        log.trace("ENTRY");
 
         try {
             Optional<TestEntity> optional = myRepository.getTestEntityById(dto.getId());
             if (optional.isPresent()) {
                 myRepository.deleteById(dto.getId());
             } else {
-                log(Level.INFO, THROW);
+                log.trace("THROW");
                 throw new ApiTestEntityNotFoundException("testEntity with this id doesn't exist");
             }
 
-            log(Level.INFO, EXIT);
+            log.trace("EXIT");
         } catch (ApiInvalidParametersException e) {
             throw new ApiInvalidParametersException("Required parameters are missing or have incorrect format");
         }
